@@ -1,15 +1,25 @@
 # Sistem Parkir
 
-Sistem manajemen tempat parkir berbasis command-line yang dibangun dengan .NET 9.0. Aplikasi ini membantu mengelola kendaraan parkir dengan berbagai fitur seperti memarkir, mengeluarkan, dan menanyakan informasi kendaraan.
+Sistem manajemen tempat parkir berbasis command-line yang dibangun dengan .NET 9.0. Aplikasi ini merupakan jawaban dari tugas yang diberikan dari NTT Indonesia Technology.
+- Nama: Saeful Ismail
+- Github: https://github.com/saefulismail01
+- LinkedIn: https://www.linkedin.com/in/saefulismail
 
-## Fitur
+## Perintah pada aplikasi ini
 
-- Membuat tempat parkir dengan jumlah slot tertentu
-- Memarkir kendaraan (Mobil/Motor) dengan nomor registrasi dan warna
-- Mengosongkan slot parkir
-- Melihat status tempat parkir
-- Mencari kendaraan berdasarkan tipe, warna, dan nomor registrasi
-- Menemukan kendaraan dengan plat nomor ganjil/genap
+| Perintah | Deskripsi | Contoh |
+|----------|-----------|--------|
+| `create_parking_lot <jumlah_slot>` | Membuat tempat parkir dengan jumlah slot tertentu | `create_parking_lot 6` |
+| `park <nomor_plat> <warna> <tipe>` | Memarkir kendaraan | `park B-1234-XYZ Putih Mobil` |
+| `leave <nomor_slot>` | Mengosongkan slot parkir | `leave 4` |
+| `status` | Menampilkan status parkir saat ini | `status` |
+| `type_of_vehicles <tipe>` | Menghitung jumlah kendaraan berdasarkan tipe | `type_of_vehicles Motor` |
+| `registration_numbers_for_vehicles_with_ood_plate` | Menampilkan nomor plat ganjil | `registration_numbers_for_vehicles_with_ood_plate` |
+| `registration_numbers_for_vehicles_with_event_plate` | Menampilkan nomor plat genap | `registration_numbers_for_vehicles_with_event_plate` |
+| `registration_numbers_for_vehicles_with_colour <warna>` | Mencari kendaraan berdasarkan warna | `registration_numbers_for_vehicles_with_colour Putih` |
+| `slot_numbers_for_vehicles_with_colour <warna>` | Mencari slot parkir berdasarkan warna kendaraan | `slot_numbers_for_vehicles_with_colour Putih` |
+| `slot_number_for_registration_number <nomor_plat>` | Mencari slot parkir berdasarkan nomor plat | `slot_number_for_registration_number B-1234-XYZ` |
+| `exit` | Keluar dari aplikasi | `exit` |
 
 ## Struktur Proyek
 
@@ -87,47 +97,91 @@ Merepresentasikan slot parkir dengan:
 8. **Cari Berdasarkan Jenis Plat**
    ```
    registration_numbers_for_vehicles_with_odd_plate
-   registration_numbers_for_vehicles_with_even_plate
-   ```
-   Mencari kendaraan dengan plat nomor ganjil atau genap.
-
-## Memulai
-
-1. Pastikan [.NET 9.0 SDK](https://dotnet.microsoft.com/download/dotnet/9.0) sudah terinstall
-2. Clone repositori ini
-3. Masuk ke direktori proyek
-4. Jalankan aplikasi:
-   ```
    dotnet run
    ```
-5. Gunakan perintah-perintah yang tersedia untuk berinteraksi dengan sistem
 
-## Contoh Penggunaan
+3. Gunakan perintah-perintah yang tersedia untuk berinteraksi dengan sistem
 
-```
-create_parking_lot 3
-park B-1234-ABC Hitam Mobil
-park B-1235-XYZ Putih Motor
+### Contoh interaksi sesuai dengan contoh yang diberikan
+
+```bash
+# Membuat tempat parkir dengan 6 slot
+create_parking_lot 6
+
+# Memarkir kendaraan
+park B-1234-XYZ Putih Mobil
+park B-9999-XYZ Putih Motor
+
+# Melihat status parkir
 status
-leave 2
-status
-registration_numbers_for_vehicles_with_colour Hitam
+
+# Mencari kendaraan berdasarkan warna
+registration_numbers_for_vehicles_with_colour Putih
+
+# Keluar dari aplikasi
+exit
 ```
 
-## Penanganan Error
+## Contoh Penggunaan Lengkap
 
-Aplikasi ini memiliki penanganan error untuk:
-- Perintah tidak valid
-- Tempat parkir penuh
-- Slot tidak tersedia
-- Tipe kendaraan tidak valid
-- Pengecekan null reference
+Berikut adalah contoh penggunaan lengkap sistem parkir sesuai dengan skenario yang diminta:
 
-## Ketergantungan
+```bash
+# Membuat tempat parkir dengan 6 slot
+create_parking_lot 6
+
+# Memarkir beberapa kendaraan
+park B-1234-XYZ Putih Mobil
+park B-9999-XYZ Putih Motor
+park D-0001-HIJ Hitam Mobil
+park B-7777-DEF Red Mobil
+park B-2701-XXX Biru Mobil
+park B-3141-ZZZ Hitam Motor
+
+# Mengosongkan slot nomor 4
+leave 4
+
+# Melihat status terkini
+status
+
+# Memarkir kendaraan baru di slot yang kosong
+park B-333-SSS Putih Mobil
+
+# Menghitung jumlah kendaraan berdasarkan tipe
+type_of_vehicles Motor
+type_of_vehicles Mobil
+
+# Mencari kendaraan dengan nomor plat ganjil/genap
+registration_numbers_for_vehicles_with_ood_plate
+registration_numbers_for_vehicles_with_event_plate
+
+# Mencari kendaraan berdasarkan warna
+registration_numbers_for_vehicles_with_colour Putih
+
+# Mencari slot parkir berdasarkan warna kendaraan
+slot_numbers_for_vehicles_with_colour Putih
+
+# Mencari slot parkir berdasarkan nomor plat
+slot_number_for_registration_number B-3141-ZZZ
+slot_number_for_registration_number Z-1111-AAA
+```
+
+## Format Output
+
+### Status Parkir
+```
+Slot    Registration No    Type    Colour
+1       B-1234-XYZ         Mobil   Putih
+2       B-9999-XYZ         Motor   Putih
+3       D-0001-HIJ         Mobil   Hitam
+```
+
+### Pesan Konfirmasi
+- Saat memarkir: `Allocated slot number: X`
+- Saat mengosongkan: `Slot number X is free`
+- Pencarian tidak ditemukan: `Not found`
+
+
+## Dependensi
 
 - .NET 9.0 Runtime
-- Tidak membutuhkan paket NuGet eksternal
-
-## Lisensi
-
-Proyek ini bersifat open source dan tersedia di bawah [Lisensi MIT](LICENSE).

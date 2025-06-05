@@ -7,6 +7,9 @@ namespace ParkingSystem
     {
         static void Main()
         {
+            Console.WriteLine("=== PARKING SYSTEM ===");
+            Console.WriteLine();
+
             ParkingService? parkingService = null;
 
             while (true)
@@ -88,7 +91,7 @@ namespace ParkingSystem
                             }
                             break;
 
-                        case "registration_numbers_for_vehicles_with_even_plate":
+                        case "registration_numbers_for_vehicles_with_event_plate":
                             if (parkingService != null)
                             {
                                 parkingService.RegistrationNumbersForVehiclesWithEvenPlate();
@@ -133,6 +136,7 @@ namespace ParkingSystem
                             break;
 
                         case "exit":
+                            Console.WriteLine("Thank you for using Parking System!");
                             return;
 
                         default:
