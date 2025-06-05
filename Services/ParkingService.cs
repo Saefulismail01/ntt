@@ -55,7 +55,7 @@ namespace ParkingSystem.Services
             Console.WriteLine("|------|-----------------|------|--------|");
             foreach (var slot in _parkingLots.Where(s => s.IsOccupied && s.Vehicle != null))
             {
-                var vehicle = slot.Vehicle!; // We know it's not null due to the Where clause
+                var vehicle = slot.Vehicle!;
                 Console.WriteLine($"| {slot.SlotNumber} | {vehicle.RegistrationNumber} | {vehicle.Type} | {vehicle.Color} |");
             }
         }
@@ -110,12 +110,31 @@ namespace ParkingSystem.Services
 
         private static bool IsOddPlate(string registrationNumber)
         {
-            var numberPart = registrationNumber.Split('-')[1];
+            var numberPart = GetNumberPart(registrationNumber);
             if (int.TryParse(numberPart, out int number))
             {
                 return number % 2 != 0;
             }
-            return false;
+            return false; // Default to false if number can't be parsed
+        }
+
+        private static string GetNumberPart(string registrationNumber)
+        {
+            try
+            {
+                // Assume format is like "B-1234-XYZ" or "D-0001-HIJ"
+                var parts = registrationNumber.Split('-');
+                if (parts.Length >= 2)
+                {
+                    // Return the middle part, which should be the numeric part
+                    return parts[1];
+                }
+            }
+            catch
+            {
+                // Return empty string if parsing fails
+            }
+            return string.Empty;
         }
     }
 }

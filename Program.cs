@@ -77,6 +77,7 @@ namespace ParkingSystem
                             break;
 
                         case "registration_numbers_for_vehicles_with_odd_plate":
+                        case "registration_numbers_for_vehicles_with_ood_plate": // Handle typo
                             if (parkingService != null)
                             {
                                 parkingService.RegistrationNumbersForVehiclesWithOddPlate();
